@@ -18,6 +18,7 @@ for bit in encoder.encode(string):
 
 result = np.concatenate((result, waveformer.create_barker7(1))).astype(np.float32)
 
-
-for i in result:
-    print(i)
+input_file = open("input.txt", "w+")
+result = [str(x) for x in result]
+for s in result:
+    input_file.write(s+"\n")
