@@ -1,27 +1,34 @@
 import numpy as np
+import cutting
 import constants
-import encoder
-import waveformer
 
-with open("input.txt") as file:
-    string = file.readlines()
-string = [x.strip() for x in string]
+only_data = cutting.cuttingData()
 
-result = []
-result = waveformer.create_barker7(1)
-for bit in encoder.encode(string):
-    if bit == -1:
-        array1 = waveformer.create_sinus(constants.FREQUENCY_0_1)
-        array2 = waveformer.create_sinus(constants.FREQUENCY_0_2)
-        result = np.concatenate((result, (array1 + array2)/4)).astype(np.float32)
-    else:
-        array1 = waveformer.create_sinus(constants.FREQUENCY_1_1)
-        array2 = waveformer.create_sinus(constants.FREQUENCY_1_2)
-        result = np.concatenate((result, (array1 + array2)/4)).astype(np.float32)
+dataSliced = []
+for i in range(5, len(only_data), 100):
+    if i + 90 > len(only_data):
+        break
+    dataSliced.append(only_data[i: i + 90])
+    print(len(only_data[i: i + 90]))
+print(dataSliced, "\n")
 
-result = np.concatenate((result, waveformer.create_barker7(1))).astype(np.float32)
+dataSlicedF = []
+freqs = []
 
-input_file = open("input.txt", "w+")
-result = [str(x) for x in result]
-for s in result:
-    input_file.write(s+"\n")
+for i, line in enumerate(dataSliced):
+    dataSlicedF[i] = np.fft.rfft(line)
+    freqs[i] = np.fft.fftfreq(len(line))
+
+# Find the peak in the coefficients
+dataSlicedFClean = []
+for i, line in enumerate(dataSlicedF):
+    idx = np.argmax(np.abs(line))
+    freq = freqs[idx]
+    dataSlicedFClean[i] = abs(freq * constants.FREQUENCY_RATE) #freq in hertz
+
+
+decodedBits = []
+for idx, freq in enumerate(dataSlicedFClean):
+    if freq >= 0 and freq <= constants.HALF_FREQ:
+        decodedBits[idx] = -1
+    else: decodedBits[idx] = 1
