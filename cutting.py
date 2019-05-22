@@ -13,7 +13,7 @@ cutting_index = (0, 0)
 
 for i in range(0, len(edges) - 1): #-1 car on est sur que le dernier n'est pas dans le decoupage et comme ca pas de index out of range
     if (edges[i + 1] - edges[i]) > 10:
-        cutting_index = (edges[i], edges[len(edges) - 1])
+        cutting_index = (edges[i], edges[i+1])
 
 only_data = content[cutting_index[0] + 1:cutting_index[1]]
 
