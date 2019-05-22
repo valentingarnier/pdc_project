@@ -3,7 +3,10 @@ import constants
 import encoder
 import waveformer
 
-string = "h"
+with open("input.txt") as file:
+    string = file.readlines()
+string = [x.strip() for x in string]
+
 result = []
 result = waveformer.create_barker7(1)
 for bit in encoder.encode(string):
