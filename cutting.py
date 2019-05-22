@@ -19,3 +19,11 @@ only_data = content[cutting_index[0] + 1:cutting_index[1]]
 
 for i in only_data:
     print(i)
+print(len(only_data))
+
+dataSliced = []
+for i in range(5, len(only_data), 100):
+    if i + 90 > len(only_data):
+        break
+    dataSliced.append(only_data[i: i + 90])
+    #print(len(only_data[i: i + 90]))
