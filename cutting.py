@@ -19,7 +19,6 @@ def cuttingData():
 
     only_data = content[cutting_index[0] + 1:cutting_index[1]]
 
-    print("this is only data: ", only_data)
-
+    only_data = [float(str) for str in only_data]
 
     return only_data

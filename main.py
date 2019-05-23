@@ -10,7 +10,7 @@ for i in range(5, len(only_data), 100):
         break
     dataSliced.append(only_data[i: i + 90])
     print(len(only_data[i: i + 90]))
-print(dataSliced, "\n")
+print("this is datasliced", dataSliced, "\n")
 
 dataSlicedF = []
 freqs = []

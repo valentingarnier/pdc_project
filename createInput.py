@@ -1,8 +1,7 @@
 import numpy as np
-import constants
 import encoder
 import waveformer
-
+import constants
 
 with open("input.txt") as file:
     string = file.readlines()
