@@ -1,6 +1,7 @@
 import numpy as np
 import cutting
 import constants
+from createInput import *
 
 only_data = cutting.cuttingData()
 
@@ -9,26 +10,33 @@ for i in range(5, len(only_data), 100):
     if i + 90 > len(only_data):
         break
     dataSliced.append(only_data[i: i + 90])
-    print(len(only_data[i: i + 90]))
-print("this is datasliced", dataSliced, "\n")
 
-dataSlicedF = []
-freqs = []
+#Sizes of arrays
+numberOfElemDataSlicedF = len(np.fft.rfft(dataSliced[0]))
+numberOfElemFreqs = len(np.fft.fftfreq(len(dataSliced[0])))
+
+#Initialization of arrays
+dataSlicedF = np.empty((createInput.sizeOfInput, numberOfElemDataSlicedF))
+freqs = np.empty((createInput.sizeOfInput, numberOfElemFreqs))
 
 for i, line in enumerate(dataSliced):
     dataSlicedF[i] = np.fft.rfft(line)
     freqs[i] = np.fft.fftfreq(len(line))
 
+
 # Find the peak in the coefficients
-dataSlicedFClean = []
+dataSlicedFClean = np.empty((createInput.sizeOfInput, 1))
 for i, line in enumerate(dataSlicedF):
     idx = np.argmax(np.abs(line))
-    freq = freqs[idx]
+    freq = freqs[i][idx]
     dataSlicedFClean[i] = abs(freq * constants.FREQUENCY_RATE) #freq in hertz
 
 
-decodedBits = []
+# decoding the sequence
+decodedBits = np.empty((createInput.sizeOfInput, 1))
 for idx, freq in enumerate(dataSlicedFClean):
-    if freq >= 0 and freq <= constants.HALF_FREQ:
+    if freq <= constants.HALF_FREQ:
         decodedBits[idx] = -1
     else: decodedBits[idx] = 1
+
+print("this is the decoded sequence: ", decodedBits)
