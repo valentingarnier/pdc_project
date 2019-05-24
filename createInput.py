@@ -7,10 +7,14 @@ with open("input.txt") as file:
     string = file.readlines()
 string = [x.strip() for x in string]
 
-result = []
-result = waveformer.create_barker7(1)
 encodedSequence = encoder.encode(string)
 sizeOfInput = len(encodedSequence)
+
+print("this is the encoded sequence: ", encodedSequence)
+
+result = []
+result = waveformer.create_barker7(1)
+
 for bit in encodedSequence:
     if bit == -1:
         array1 = waveformer.create_sinus(constants.FREQUENCY_0_1)

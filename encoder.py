@@ -12,5 +12,4 @@ def encode(str):
     for char in str:
         encodedString = np.concatenate((encodedString, encodeChar(char)))
 
-    print("encoded sequence: ", encodedString)
     return encodedString

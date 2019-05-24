@@ -1,15 +1,15 @@
 import numpy as np
 import cutting
 import constants
-from createInput import *
+from createInput import sizeOfInput
 
 only_data = cutting.cuttingData()
 
 dataSliced = []
-for i in range(5, len(only_data), 100):
-    if i + 90 > len(only_data):
+for i in range(5, len(only_data), constants.NUMBER_SAMPLES):
+    if i + (constants.NUMBER_SAMPLES - 10) > len(only_data):
         break
-    dataSliced.append(only_data[i: i + 90])
+    dataSliced.append(only_data[i: i + (constants.NUMBER_SAMPLES - 10)])
 
 #Sizes of arrays
 numberOfElemDataSlicedF = len(np.fft.rfft(dataSliced[0]))
