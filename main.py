@@ -32,4 +32,6 @@ for i, line in enumerate(dataSlicedF):
 
 decodedBits = decoder.decode(dataSlicedFClean)
 
-print("this is the decoded sequence: ", decodedBits[: len(decodedBits) - 1])
+print("this is the decoded sequence: ", decodedBits)
+
+decoder.decode8bits(decodedBits)

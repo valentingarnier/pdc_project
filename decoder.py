@@ -9,3 +9,6 @@ def decode(frequencies):
             decodedBits[idx] = -1
         else: decodedBits[idx] = 1
     return decodedBits
+
+def decode8bits(arrayBits):
+    return None

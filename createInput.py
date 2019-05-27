@@ -7,7 +7,7 @@ with open("input.txt") as file:
     string = file.readlines()
 string = [x.strip() for x in string]
 
-encodedSequence = encoder.encode(string)
+encodedSequence = encoder.encode(string[0])
 sizeOfInput = len(encodedSequence)
 
 print("this is the encoded sequence: ", encodedSequence)
