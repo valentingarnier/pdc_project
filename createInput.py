@@ -10,8 +10,6 @@ string = [x.strip() for x in string]
 encodedSequence = encoder.encode(string[0])
 sizeOfInput = len(encodedSequence)
 
-print("this is the encoded sequence: ", encodedSequence)
-
 result = []
 result = waveformer.create_barker7(1)
 

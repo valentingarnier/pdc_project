@@ -11,27 +11,25 @@ for i in range(5, len(only_data), constants.NUMBER_SAMPLES):
         break
     dataSliced.append(only_data[i: i + (constants.NUMBER_SAMPLES - 10)])
 
-#Sizes of arrays
-numberOfElemDataSlicedF = len(np.fft.rfft(dataSliced[0]))
-numberOfElemFreqs = len(np.fft.fftfreq(len(dataSliced[0])))
-
 #Initialization of arrays
-dataSlicedF = np.empty((constants.SIZE_OF_ENCODED_SEQUENCE, numberOfElemDataSlicedF))
-freqs = np.empty((constants.SIZE_OF_ENCODED_SEQUENCE, numberOfElemFreqs))
+dataSlicedF = []
+freqs = []
 
-for i, line in enumerate(dataSliced):
-    dataSlicedF[i] = np.fft.rfft(line)
-    freqs[i] = np.fft.fftfreq(len(line))
+for line in dataSliced:
+    dataSlicedF.append(np.fft.rfft(line))
+    freqs.append(np.fft.fftfreq(len(line)))
 
 # Find the peak in the coefficients
-dataSlicedFClean = np.empty((constants.SIZE_OF_ENCODED_SEQUENCE, 1))
+dataSlicedFClean = []
 for i, line in enumerate(dataSlicedF):
     idx = np.argmax(np.abs(line))
     freq = freqs[i][idx]
-    dataSlicedFClean[i] = abs(freq * constants.FREQUENCY_RATE) #freq in hertz
+    dataSlicedFClean.append(abs(freq * constants.FREQUENCY_RATE)) #freq in hertz
 
 decodedBits = decoder.decode(dataSlicedFClean)
 
-print("this is the decoded sequence: ", decodedBits)
+cutted = decoder.slicedBits(np.asarray(decodedBits))
+finalText = decoder.fromBinToChar(cutted)
 
-decoder.decode8bits(decodedBits)
+finalOutput = open("output.txt", "w")
+finalOutput.write(finalText)
