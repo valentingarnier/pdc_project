@@ -1,3 +1,3 @@
-# pdc_project
+# EPFL Project: Principles of Digital Communication
 
-hellooo
+Reconstruction of a signal after passing it inside a noisy channel.
